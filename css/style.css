@@ -1,0 +1,205 @@
+*,
+*::after,
+*::before {
+   box-sizing: border-box;
+}
+
+:root {
+   --cell-size: 175px;
+   --mark-size: calc(var(--cell-size) * .9)
+}
+
+@media(max-width: 767px) {
+   :root {
+      --cell-size: 115px;
+   }
+}
+
+@media(max-width: 400px) {
+   :root {
+      --cell-size: 95px;
+   }
+}
+
+body {
+   margin: 0;
+}
+
+.board {
+   width: 100vw;
+   height: 100vh;
+   display: grid;
+   justify-content: center;
+   align-items: center;
+   justify-items: center;
+   align-content: center;
+   grid-template-columns: repeat(3, auto);
+   gap: 20px;
+   background: linear-gradient(0deg, rgba(13, 17, 32, 1) 0%, rgba(58, 54, 78, 1) 100%);
+}
+
+@media(max-width: 767px) {
+   .board {
+      gap: 10px
+   }
+
+}
+
+@media(max-width: 400px) {
+   .board {
+      gap: 5px;
+   }
+
+}
+
+.cell {
+   width: var(--cell-size);
+   height: var(--cell-size);
+   /* border: 3px solid #fff; */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+   cursor: pointer;
+   background-color: #35364A;
+   border-radius: 10px;
+}
+
+.cell.x,
+.cell.circle {
+   cursor: not-allowed;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+   border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+   border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+   border-right: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+   border-bottom: none;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+   background-color: black;
+}
+
+.cell.x::before,
+.cell.x::after {
+   background-color: #ffffff;
+}
+
+.cell.circle::before {
+   background-color: #726BDD;
+}
+
+
+/* .board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+   background-color: lightgray;
+} */
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+   background-color: #959595;
+}
+
+.board.circle .cell:not(.x):not(.circle):hover::before {
+   background-color: #bfbbf6;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover:before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+   content: '';
+   position: absolute;
+   width: calc(var(--mark-size) * .25);
+   height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+   transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+   transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+   content: '';
+   position: absolute;
+   border-radius: 50%;
+
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+   width: var(--mark-size);
+   height: var(--mark-size);
+}
+
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+   width: calc(var(--mark-size) * .6);
+   height: calc(var(--mark-size) * .6);
+   background-color: inherit;
+}
+
+.winning-message {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: rgba(0, 0, 0, .9);
+   display: none;
+   justify-content: center;
+   align-items: center;
+   color: #fff;
+   font-size: 5rem;
+}
+
+.winning-message button {
+   font-size: 3rem;
+   background-color: #fff;
+   border: 1px solid #000;
+   padding: .25em .5em;
+   cursor: pointer;
+   transition: all 0.3s;
+   margin-left: 10px;
+}
+
+.winning-message button:hover {
+   background-color: #000;
+   color: #fff;
+   border-color: #fff;
+
+}
+
+.winning-message.show {
+   display: flex;
+}
+
+@media(max-width: 767px) {
+   .winning-message.show {
+      flex-direction: column;
+   }
+}
